@@ -1,21 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipselabs.changelog.feature"
-      label="ChangeLog Feature"
-      version="1.0.2.qualifier"
-      provider-name="Júlio Vilmar Gesser">
+      label="ChangeLog Plug-in (Eclipse 4.41 compatible fork)"
+      version="1.1.0.qualifier"
+      provider-name="Milankovitch (original authors: Júlio Vilmar Gesser, John C. Landers)">
 
-   <description url="http://www.example.com/description">
-      [Enter Feature Description here.]
+   <description url="https://github.com/Milankovitch/Eclipse-CVS-ChangeLog-Plugin">
+      Generates GNU-style ChangeLog entries from CVS commit history.
+      This is a fork of the original Eclipse CVS ChangeLog Plug-in, updated to
+      build and run on Eclipse 4.41 and Java 21 or later.
+      Requires the Eclipse CVS Client feature.
    </description>
 
-   <copyright url="http://www.example.com/copyright">
-      [Enter Copyright Description here.]
+   <copyright url="https://github.com/Milankovitch/Eclipse-CVS-ChangeLog-Plugin">
+      Copyright (c) John C. Landers. All rights reserved.
+      Modifications Copyright (c) Milankovitch.
    </copyright>
 
-   <license url="http://www.example.com/license">
-      [Enter License Description here.]
+   <license url="http://www.eclipse.org/legal/cpl-v10.html">
+      This program and the accompanying materials are made available under
+      the terms of the Common Public License v1.0, which accompanies this
+      distribution and is available at
+      http://www.eclipse.org/legal/cpl-v10.html
    </license>
+
+   <url>
+      <update label="ChangeLog Plug-in Update Site"
+              url="https://milankovitch.github.io/Eclipse-CVS-ChangeLog-Plugin/org.eclipselabs.changelog.update-site/"/>
+   </url>
 
    <plugin
          id="org.eclipselabs.changelog"

@@ -3,9 +3,9 @@ Bundle-ManifestVersion: 2
 Automatic-Module-Name: org.eclipselabs.changelog
 Bundle-Name: ChangeLog Plug-in
 Bundle-SymbolicName: org.eclipselabs.changelog;singleton:=true
-Bundle-Version: 1.0.2.qualifier
+Bundle-Version: 1.1.0.qualifier
 Bundle-Activator: org.eclipselabs.changelog.CVSChangeLogPlugin
-Bundle-Vendor: Júlio Vilmar Gesser
+Bundle-Vendor: Milankovitch (original: Júlio Vilmar Gesser, John C. Landers)
 Require-Bundle: org.eclipse.team.cvs.core,
  org.eclipse.team.core,
  org.eclipse.team.cvs.ui,
