@@ -3,8 +3,6 @@
 	<name>org.eclipselabs.changelog</name>
 	<comment></comment>
 	<projects>
-		<project>org.eclipse.team.cvs.core</project>
-		<project>org.eclipse.team.cvs.ui</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
