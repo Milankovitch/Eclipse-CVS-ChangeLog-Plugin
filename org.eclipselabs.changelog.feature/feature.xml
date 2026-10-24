@@ -26,7 +26,7 @@
 
    <url>
       <update label="ChangeLog Plug-in Update Site"
-              url="https://milankovitch.github.io/Eclipse-CVS-ChangeLog-Plugin/org.eclipselabs.changelog.update-site/"/>
+              url="https://milankovitch.github.io/Eclipse-CVS-ChangeLog-Plugin/"/>
    </url>
 
    <plugin
