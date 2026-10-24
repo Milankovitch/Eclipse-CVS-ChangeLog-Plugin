@@ -7,6 +7,7 @@
 package org.eclipselabs.changelog;
 
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import org.eclipse.core.runtime.IStatus;
@@ -72,9 +73,9 @@ public final class CVSChangeLogPlugin extends AbstractUIPlugin {
      */
     protected void createImageDescriptor(String id, URL baseURL, ImageRegistry reg) {
         try {
-            ImageDescriptor desc = ImageDescriptor.createFromURL(new URL(baseURL, id));
-            reg.put(id, desc);
-        } catch (MalformedURLException e) {
+        	URL url = baseURL.toURI().resolve(id).toURL();
+        	reg.put(id, ImageDescriptor.createFromURL(url));
+        } catch (MalformedURLException | URISyntaxException | IllegalArgumentException e) {
             Status pluginStatus = new Status(IStatus.ERROR, getDefault().getBundle().getSymbolicName(), e.getMessage(), e);
             plugin.getLog().log(pluginStatus);
         }

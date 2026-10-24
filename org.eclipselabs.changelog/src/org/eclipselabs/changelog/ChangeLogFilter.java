@@ -6,6 +6,8 @@
  */
 package org.eclipselabs.changelog;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 import org.eclipse.jface.viewers.Viewer;
@@ -38,25 +40,38 @@ final class ChangeLogFilter extends ViewerFilter {
         this.author = split[0];
         this.comment = split[1];
 
-        String year = split[2];
-        String month = split[3];
-        String day = split[4];
-        if (year.length() > 0) {
-            this.fromDate = new Date(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
-        } else {
-            fromDate = null;
-        }
-
-        year = split[5];
-        month = split[6];
-        day = split[7];
-        if (year.length() > 0) {
-            this.toDate = new Date(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
-        } else {
-            toDate = null;
-        }
+        this.fromDate = split[2].length() > 0 ? parseDate(split[2], split[3], split[4]) : null;
+        this.toDate = split[5].length() > 0 ? parseDate(split[5], split[6], split[7]) : null;
 
         this.isOr = Boolean.parseBoolean(split[8]);
+    }
+
+    /**
+     * Creates a Date from the legacy stored format (year - 1900, zero-based month, day).
+     */
+    private static Date parseDate(String year, String month, String day) {
+        LocalDate d = LocalDate.of(
+                Integer.parseInt(year) + 1900,
+                Integer.parseInt(month) + 1,
+                Integer.parseInt(day));
+        return Date.from(d.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    }
+
+    /**
+     * Appends a Date in the legacy stored format "year-1900|zero-based month|day".
+     * For null, appends empty fields.
+     */
+    private static void appendDate(StringBuilder sb, Date date) {
+        if (date == null) {
+            sb.append(SEPARATOR).append(SEPARATOR);
+            return;
+        }
+        LocalDate d = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        sb.append(d.getYear() - 1900);
+        sb.append(SEPARATOR);
+        sb.append(d.getMonthValue() - 1);
+        sb.append(SEPARATOR);
+        sb.append(d.getDayOfMonth());
     }
 
     @Override
@@ -71,29 +86,9 @@ final class ChangeLogFilter extends ViewerFilter {
             ret.append(comment);
         }
         ret.append(SEPARATOR);
-        if (fromDate != null) {
-            ret.append(fromDate.getYear());
-        }
+        appendDate(ret, fromDate);
         ret.append(SEPARATOR);
-        if (fromDate != null) {
-            ret.append(fromDate.getMonth());
-        }
-        ret.append(SEPARATOR);
-        if (fromDate != null) {
-            ret.append(fromDate.getDate());
-        }
-        ret.append(SEPARATOR);
-        if (toDate != null) {
-            ret.append(toDate.getYear());
-        }
-        ret.append(SEPARATOR);
-        if (toDate != null) {
-            ret.append(toDate.getMonth());
-        }
-        ret.append(SEPARATOR);
-        if (toDate != null) {
-            ret.append(toDate.getDate());
-        }
+        appendDate(ret, toDate);
         ret.append(SEPARATOR);
         ret.append(isOr);
 

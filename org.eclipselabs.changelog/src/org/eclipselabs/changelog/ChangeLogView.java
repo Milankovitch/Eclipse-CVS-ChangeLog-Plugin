@@ -45,8 +45,8 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.viewers.ViewerFilter;
-import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.dnd.Clipboard;
@@ -139,7 +139,8 @@ public final class ChangeLogView extends ViewPart implements IPropertyChangeList
         super.dispose();
     }
 
-    public void propertyChange(PropertyChangeEvent event) {
+    @SuppressWarnings("unchecked")
+	public void propertyChange(PropertyChangeEvent event) {
         if (ChangeLogPreferences.DISPLAY_PATH_PREFERENCE.equals(event.getProperty())) {
             fileDisplayMode = ((Number) event.getNewValue()).intValue();
             filesTreeViewer.refresh();
@@ -189,7 +190,8 @@ public final class ChangeLogView extends ViewPart implements IPropertyChangeList
         compareMenu.setEnabled(false);
         compareMenu.addSelectionListener(new SelectionAdapter() {
 
-            @Override
+            @SuppressWarnings("unchecked")
+			@Override
             public void widgetSelected(SelectionEvent e) {
                 for (FileEntry entry : (List<FileEntry>) ((IStructuredSelection) filesTreeViewer.getSelection()).toList()) {
                     openFileInCompare(entry);
@@ -202,7 +204,8 @@ public final class ChangeLogView extends ViewPart implements IPropertyChangeList
         openMenu.setEnabled(false);
         openMenu.addSelectionListener(new SelectionAdapter() {
 
-            @Override
+            @SuppressWarnings("unchecked")
+			@Override
             public void widgetSelected(SelectionEvent e) {
                 for (FileEntry entry : (List<FileEntry>) ((IStructuredSelection) filesTreeViewer.getSelection()).toList()) {
                     openFileInEditor(entry);
@@ -330,7 +333,8 @@ public final class ChangeLogView extends ViewPart implements IPropertyChangeList
         tbm.add(refreshAction);
     }
 
-    protected void copyToClipBoard(boolean all) {
+    @SuppressWarnings("unchecked")
+	protected void copyToClipBoard(boolean all) {
 
         FileEntry[] entries;
         if (all) {
@@ -341,10 +345,10 @@ public final class ChangeLogView extends ViewPart implements IPropertyChangeList
             entries = list.toArray(new FileEntry[list.size()]);
         }
 
-        // ordena conforme a ordenação do usuário
-        filesTreeViewer.getSorter().sort(filesTreeViewer, entries);
+        // ordena conforme a ordenaï¿½ï¿½o do usuï¿½rio
+        filesTreeViewer.getComparator().sort(filesTreeViewer, entries);
 
-        // pega o mesmo label visível para o usuário
+        // pega o mesmo label visï¿½vel para o usuï¿½rio
         ITableLabelProvider labelProvider = (ITableLabelProvider) filesTreeViewer.getLabelProvider();
 
         StringWriter buf = new StringWriter();
@@ -472,7 +476,7 @@ public final class ChangeLogView extends ViewPart implements IPropertyChangeList
             }
         });
 
-        ret.setSorter(new ChangeLogEntrySorter());
+        ret.setComparator(new ChangeLogEntrySorter());
         setSort(ret, 0);
         setSort(ret, 0);
 
@@ -635,7 +639,7 @@ public final class ChangeLogView extends ViewPart implements IPropertyChangeList
         col.addSelectionListener(getColumnSelectionListener(ret, 2));
         layout.addColumnData(new ColumnPixelData(80, true));
 
-        ret.setSorter(new FilesSorter());
+        ret.setComparator(new FilesSorter());
         setSort(ret, 0);
 
         return ret;
@@ -666,7 +670,8 @@ public final class ChangeLogView extends ViewPart implements IPropertyChangeList
         viewer.refresh();
     }
 
-    protected void updateSelection(ISelection selection) {
+    @SuppressWarnings("unchecked")
+	protected void updateSelection(ISelection selection) {
         List<ChangeLogEntry> entries = ((IStructuredSelection) selection).toList();
 
         Collection<FileEntry> files = mergeFiles(entries);
@@ -871,7 +876,7 @@ public final class ChangeLogView extends ViewPart implements IPropertyChangeList
         return filesTreeViewer != null && !filesTreeViewer.getTree().isDisposed();
     }
 
-    static class ChangeLogEntrySorter extends ViewerSorter {
+    static class ChangeLogEntrySorter extends ViewerComparator {
 
         @Override
         public int compare(Viewer viewer, Object e1, Object e2) {
@@ -901,7 +906,7 @@ public final class ChangeLogView extends ViewPart implements IPropertyChangeList
         }
     }
 
-    class FilesSorter extends ViewerSorter {
+    class FilesSorter extends ViewerComparator {
 
         @Override
         public int compare(Viewer viewer, Object e1, Object e2) {
