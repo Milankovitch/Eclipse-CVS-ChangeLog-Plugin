@@ -46,7 +46,7 @@ Copyright (c) John C. Landers. Modifications Copyright (c) Milankovitch.
 [adagioca/Eclipse-CVS-ChangeLog-Plugin](https://github.com/adagioca/Eclipse-CVS-ChangeLog-Plugin) のフォークです。
 Eclipse 4.41 と Java 21 以降でビルド・動作するように修正しています。
 
-元のプロジェクト(https://code.google.com/a/eclipselabs.org/p/changelog/)は、すでに閉鎖されています。
+元のプロジェクト( https://code.google.com/a/eclipselabs.org/p/changelog )は、すでに閉鎖されています。
 
 ## 動作要件
 
